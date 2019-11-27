@@ -6,7 +6,7 @@
 #include "field-math.hpp"
 #include <queue>
 #include "localsat.hpp"
-#include "pcg32/pcg32.h"
+#include "pcg_random.hpp"
 #ifdef WITH_TBB
 #  include "tbb/tbb.h"
 #  include "pss/parallel_stable_sort.h"
@@ -199,7 +199,7 @@ void Hierarchy::generate_graph_coloring_deterministic(const AdjacentMatrix& adj,
     std::vector<uint32_t> perm(size);
     for (uint32_t i = 0; i < size; ++i) perm[i] = i;
     pcg32 rng;
-    rng.shuffle(perm.begin(), perm.end());
+    std::shuffle(perm.begin(), perm.end(), rng);
 
     std::vector<int> color(size, -1);
     std::vector<uint8_t> possible_colors;
